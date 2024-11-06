@@ -1,6 +1,6 @@
 name:                gpu-vulkan-core
-version:             0.1.0.7
-github:              "githubuser/gpu-vulkan-core"
+version:             0.1.0.8
+github:              "YoshikuniJujo/gpu-vulkan-core"
 license:             BSD3
 author:              "Yoshikuni Jujo"
 maintainer:          "example@example.com"
