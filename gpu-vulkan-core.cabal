@@ -5,14 +5,14 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:           gpu-vulkan-core
-version:        0.1.0.8
+version:        0.1.0.9
 synopsis:       Thin wrapper for Vulkan API
 description:    Please see the README on GitHub at <https://github.com/YoshikuniJujo/gpu-vulkan-core#readme>
 category:       GPU
 homepage:       https://github.com/YoshikuniJujo/gpu-vulkan-core#readme
 bug-reports:    https://github.com/YoshikuniJujo/gpu-vulkan-core/issues
 author:         Yoshikuni Jujo
-maintainer:     example@example.com
+maintainer:     yoshikuni.jujo@gmail.com
 copyright:      2022 Yoshikuni Jujo
 license:        BSD3
 license-file:   LICENSE
@@ -78,6 +78,9 @@ library
       Gpu.Vulkan.Subpass.Core
       Gpu.Vulkan.VertexInput.Core
       Gpu.Vulkan.TypeSynonyms.Core
+      Gpu.Vulkan.Sparse.Core
+      Gpu.Vulkan.Sparse.Buffer.Core
+      Gpu.Vulkan.Sparse.Image.Core
   other-modules:
       Data.Text.Tools
       Paths_gpu_vulkan_core

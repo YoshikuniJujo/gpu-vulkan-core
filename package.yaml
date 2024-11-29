@@ -1,9 +1,9 @@
 name:                gpu-vulkan-core
-version:             0.1.0.8
+version:             0.1.0.9
 github:              "YoshikuniJujo/gpu-vulkan-core"
 license:             BSD3
 author:              "Yoshikuni Jujo"
-maintainer:          "example@example.com"
+maintainer:          "yoshikuni.jujo@gmail.com"
 copyright:           "2022 Yoshikuni Jujo"
 
 extra-source-files:
@@ -82,6 +82,9 @@ library:
   - Gpu.Vulkan.Subpass.Core
   - Gpu.Vulkan.VertexInput.Core
   - Gpu.Vulkan.TypeSynonyms.Core
+  - Gpu.Vulkan.Sparse.Core
+  - Gpu.Vulkan.Sparse.Buffer.Core
+  - Gpu.Vulkan.Sparse.Image.Core
 
 tests:
   gpu-vulkan-core-test:
