@@ -46,6 +46,12 @@ module Gpu.Vulkan.Image.Core (
 	subresourceLayersAspectMask, subresourceLayersMipLevel,
 	subresourceLayersBaseArrayLayer, subresourceLayersLayerCount,
 
+	-- * Subresource
+
+	Subresource, pattern Subresource,
+	subresourceAspectMask, subresourceMipLevel,
+	subresourceArrayLayer
+
 	) where
 
 import Foreign.Ptr
@@ -59,7 +65,7 @@ import Data.Int
 import Gpu.Vulkan.Core
 import Gpu.Vulkan.TypeSynonyms.Core
 import Gpu.Vulkan.AllocationCallbacks.Core qualified as AllocationCallbacks
-import Gpu.Vulkan.Device.Core qualified as Device
+import {-# SOURCE #-} Gpu.Vulkan.Device.Core qualified as Device
 import Gpu.Vulkan.Memory.Core qualified as Memory
 
 #include <vulkan/vulkan.h>
@@ -217,4 +223,17 @@ struct "Blit" #{size VkImageBlit} #{alignment VkImageBlit} [
 		[| \p -> peekArray 2 (#{ptr VkImageBlit, dstOffsets} p) |],
 		[| \p os -> pokeArray
 			(#{ptr VkImageBlit, dstOffsets} p) $ take 2 os |]) ]
+	[''Show, ''Storable]
+
+struct "Subresource" #{size VkImageSubresource}
+	#{alignment VkImageSubresource} [
+	("aspectMask", ''#{type VkImageAspectFlags},
+		[| #{peek VkImageSubresource, aspectMask} |],
+		[| #{poke VkImageSubresource, aspectMask} |]),
+	("mipLevel", ''#{type uint32_t},
+		[| #{peek VkImageSubresource, mipLevel} |],
+		[| #{poke VkImageSubresource, mipLevel} |]),
+	("arrayLayer", ''#{type uint32_t},
+		[| #{peek VkImageSubresource, arrayLayer} |],
+		[| #{poke VkImageSubresource, arrayLayer} |]) ]
 	[''Show, ''Storable]

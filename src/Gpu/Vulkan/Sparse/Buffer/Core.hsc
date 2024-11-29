@@ -6,6 +6,7 @@
 
 module Gpu.Vulkan.Sparse.Buffer.Core where
 
+import Foreign.Ptr
 import Foreign.Storable
 import Foreign.C.Struct
 import Data.Word
@@ -15,7 +16,7 @@ import Gpu.Vulkan.Sparse.Core
 
 #include <vulkan/vulkan.h>
 
-struct "MemorybindInfo" #{size VkSparseBufferMemoryBindInfo}
+struct "MemoryBindInfo" #{size VkSparseBufferMemoryBindInfo}
 	#{alignment VkSparseBufferMemoryBindInfo} [
 	("buffer", ''Buffer.B,
 		[| #{peek VkSparseBufferMemoryBindInfo, buffer} |],
@@ -27,3 +28,5 @@ struct "MemorybindInfo" #{size VkSparseBufferMemoryBindInfo}
 		[| #{peek VkSparseBufferMemoryBindInfo, pBinds} |],
 		[| #{poke VkSparseBufferMemoryBindInfo, pBinds} |]) ]
 	[''Show, ''Storable]
+
+type PtrMemoryBindInfo = Ptr MemoryBindInfo

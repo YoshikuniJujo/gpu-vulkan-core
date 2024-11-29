@@ -44,7 +44,7 @@ import Data.Int
 import Gpu.Vulkan.Core
 import Gpu.Vulkan.TypeSynonyms.Core
 import Gpu.Vulkan.AllocationCallbacks.Core qualified as AllocationCallbacks
-import Gpu.Vulkan.Device.Core qualified as Device
+import {-# SOURCE #-} Gpu.Vulkan.Device.Core qualified as Device
 import Gpu.Vulkan.Memory.Core qualified as Memory
 import Gpu.Vulkan.Image.Core qualified as Image
 
