@@ -47,7 +47,7 @@ struct "MemoryBind" #{size VkSparseImageMemoryBind}
 	("memory", ''Memory.M,
 		[| #{peek VkSparseImageMemoryBind, memory} |],
 		[| #{poke VkSparseImageMemoryBind, memory} |]),
-	("memoryOffset", ''Memory.M,
+	("memoryOffset", ''#{type VkDeviceSize},
 		[| #{peek VkSparseImageMemoryBind, memoryOffset} |],
 		[| #{poke VkSparseImageMemoryBind, memoryOffset} |]),
 	("flags", ''#{type VkSparseMemoryBindFlags},
