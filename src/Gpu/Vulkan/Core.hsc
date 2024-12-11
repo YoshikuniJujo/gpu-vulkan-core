@@ -175,6 +175,12 @@ foreign import capi "vulkan/vulkan.h value VK_API_VERSION_1_0" apiVersion_1_0 ::
 foreign import capi "vulkan/vulkan.h value VK_API_VERSION_1_1" apiVersion_1_1 ::
 	ApiVersion
 
+foreign import capi "vulkan/vulkan.h value VK_API_VERSION_1_2" apiVersion_1_2 ::
+	ApiVersion
+
+foreign import capi "vulkan/vulkan.h value VK_API_VERSION_1_3" apiVersion_1_3 ::
+	ApiVersion
+
 type PtrApplicationInfo = Ptr ApplicationInfo
 
 struct "Extent2d" #{size VkExtent2D} #{alignment VkExtent2D} [
