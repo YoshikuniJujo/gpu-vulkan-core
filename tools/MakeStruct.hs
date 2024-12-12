@@ -100,6 +100,10 @@ csnToStructureType csn = "(#{const VK_STRUCTURE_TYPE_" ++
 
 sepUpper :: String -> [String]
 sepUpper "" = [""]
+sepUpper ('V' : 'u' : 'l' : 'k' : 'a' : 'n' : '1' : '2' : c : cs) =
+	"" : "Vulkan" : "1" : "2" : sepUpper (toLower c : cs)
+sepUpper ('V' : 'u' : 'l' : 'k' : 'a' : 'n' : '1' : '3' : c : cs) =
+	"" : "Vulkan" : "1" : "3" : sepUpper (toLower c : cs)
 sepUpper ca@(c : cs)
 	| isUpper c = "" : sepUpper (toLower c : cs)
 	| otherwise = case sepUpper cs of

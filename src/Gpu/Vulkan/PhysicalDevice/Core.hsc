@@ -55,6 +55,8 @@ module Gpu.Vulkan.PhysicalDevice.Core (
 
 	getFeatures2, Features2,
 	pattern Features2, features2SType, features2PNext, features2Features,
+	Vulkan12Features, pattern Vulkan12Features,
+	Vulkan13Features, pattern Vulkan13Features,
 
 	-- ** ShaderDrawParametersFeatures
 
