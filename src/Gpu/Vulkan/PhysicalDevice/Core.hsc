@@ -55,8 +55,10 @@ module Gpu.Vulkan.PhysicalDevice.Core (
 
 	getFeatures2, Features2,
 	pattern Features2, features2SType, features2PNext, features2Features,
-	Vulkan12Features, pattern Vulkan12Features,
-	Vulkan13Features, pattern Vulkan13Features,
+	Vulkan12Features, pattern Vulkan12Features, getClearedVulkan12Features,
+	Vulkan13Features, pattern Vulkan13Features, getClearedVulkan13Features,
+	DescriptorIndexingFeatures, pattern DescriptorIndexingFeatures,
+	getClearedDescriptorIndexingFeatures,
 
 	-- ** ShaderDrawParametersFeatures
 
@@ -202,6 +204,26 @@ foreign import ccall "vkGetPhysicalDeviceQueueFamilyProperties"
 	getQueueFamilyProperties ::
 	P -> Ptr #{type uint32_t} -> Ptr QueueFamily.Properties ->
 	IO ()
+
+getClearedVulkan12Features :: Ptr () -> IO Vulkan12Features
+getClearedVulkan12Features pn = do
+	pf <- calloc
+	zero <- Vulkan12Features_ <$> newForeignPtr pf (free pf)
+	pure $ zero { vulkan12FeaturesSType = (), vulkan12FeaturesPNext = pn }
+
+getClearedVulkan13Features :: Ptr () -> IO Vulkan13Features
+getClearedVulkan13Features pn = do
+	pf <- calloc
+	zero <- Vulkan13Features_ <$> newForeignPtr pf (free pf)
+	pure $ zero { vulkan13FeaturesSType = (), vulkan13FeaturesPNext = pn }
+
+getClearedDescriptorIndexingFeatures :: Ptr () -> IO DescriptorIndexingFeatures
+getClearedDescriptorIndexingFeatures pn = do
+	pf <- calloc
+	zero <- DescriptorIndexingFeatures_ <$> newForeignPtr pf (free pf)
+	pure $ zero {
+		descriptorIndexingFeaturesSType = (),
+		descriptorIndexingFeaturesPNext = pn }
 
 foreign import ccall "vkEnumerateDeviceExtensionProperties"
 	enumerateExtensionProperties ::
