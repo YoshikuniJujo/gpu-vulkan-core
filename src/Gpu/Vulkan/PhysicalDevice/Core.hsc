@@ -205,25 +205,23 @@ foreign import ccall "vkGetPhysicalDeviceQueueFamilyProperties"
 	P -> Ptr #{type uint32_t} -> Ptr QueueFamily.Properties ->
 	IO ()
 
-getClearedVulkan12Features :: Ptr () -> IO Vulkan12Features
-getClearedVulkan12Features pn = do
+getClearedVulkan12Features :: IO Vulkan12Features
+getClearedVulkan12Features = do
 	pf <- calloc
 	zero <- Vulkan12Features_ <$> newForeignPtr pf (free pf)
-	pure $ zero { vulkan12FeaturesSType = (), vulkan12FeaturesPNext = pn }
+	pure $ zero { vulkan12FeaturesSType = () }
 
-getClearedVulkan13Features :: Ptr () -> IO Vulkan13Features
-getClearedVulkan13Features pn = do
+getClearedVulkan13Features :: IO Vulkan13Features
+getClearedVulkan13Features = do
 	pf <- calloc
 	zero <- Vulkan13Features_ <$> newForeignPtr pf (free pf)
-	pure $ zero { vulkan13FeaturesSType = (), vulkan13FeaturesPNext = pn }
+	pure $ zero { vulkan13FeaturesSType = () }
 
-getClearedDescriptorIndexingFeatures :: Ptr () -> IO DescriptorIndexingFeatures
-getClearedDescriptorIndexingFeatures pn = do
+getClearedDescriptorIndexingFeatures :: IO DescriptorIndexingFeatures
+getClearedDescriptorIndexingFeatures = do
 	pf <- calloc
 	zero <- DescriptorIndexingFeatures_ <$> newForeignPtr pf (free pf)
-	pure $ zero {
-		descriptorIndexingFeaturesSType = (),
-		descriptorIndexingFeaturesPNext = pn }
+	pure $ zero { descriptorIndexingFeaturesSType = () }
 
 foreign import ccall "vkEnumerateDeviceExtensionProperties"
 	enumerateExtensionProperties ::
