@@ -31,7 +31,12 @@ module Gpu.Vulkan.Memory.Core (
 	-- * BARRIER
 
 	Barrier, pattern Barrier,
-	barrierSType, barrierPNext, barrierSrcAccessMask, barrierDstAccessMask
+	barrierSType, barrierPNext, barrierSrcAccessMask, barrierDstAccessMask,
+
+	Barrier2, pattern Barrier2,
+	barrier2SType, barrier2PNext,
+	barrier2SrcStageMask, barrier2SrcAccessMask,
+	barrier2DstStageMask, barrier2DstAccessMask
 
 	) where
 
@@ -138,4 +143,27 @@ struct "Barrier" #{size VkMemoryBarrier} #{alignment VkMemoryBarrier} [
 	("dstAccessMask", ''#{type VkAccessFlags},
 		[| #{peek VkMemoryBarrier, dstAccessMask} |],
 		[| #{poke VkMemoryBarrier, dstAccessMask} |]) ]
+	[''Show, ''Storable]
+
+bType2 :: #{type VkStructureType}
+bType2 = #{const VK_STRUCTURE_TYPE_MEMORY_BARRIER_2}
+
+struct "Barrier2" #{size VkMemoryBarrier2} #{alignment VkMemoryBarrier2} [
+	("sType", ''(), [| const $ pure () |],
+		[| \p _ -> #{poke VkMemoryBarrier2, sType} p bType2 |]),
+	("pNext", ''PtrVoid,
+		[| #{peek VkMemoryBarrier2, pNext} |],
+		[| #{poke VkMemoryBarrier2, pNext} |]),
+	("srcStageMask", ''#{type VkPipelineStageFlags2},
+		[| #{peek VkMemoryBarrier2, srcStageMask} |],
+		[| #{poke VkMemoryBarrier2, srcStageMask} |]),
+	("srcAccessMask", ''#{type VkAccessFlags2},
+		[| #{peek VkMemoryBarrier2, srcAccessMask} |],
+		[| #{poke VkMemoryBarrier2, srcAccessMask} |]),
+	("dstStageMask", ''#{type VkPipelineStageFlags2},
+		[| #{peek VkMemoryBarrier2, dstStageMask} |],
+		[| #{poke VkMemoryBarrier2, dstStageMask} |]),
+	("dstAccessMask", ''#{type VkAccessFlags2},
+		[| #{peek VkMemoryBarrier2, dstAccessMask} |],
+		[| #{poke VkMemoryBarrier2, dstAccessMask} |]) ]
 	[''Show, ''Storable]
