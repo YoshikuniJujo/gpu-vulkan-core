@@ -30,7 +30,14 @@ module Gpu.Vulkan.Buffer.Core (
 	memoryBarrierSType, memoryBarrierPNext,
 	memoryBarrierSrcAccessMask, memoryBarrierDstAccessMask,
 	memoryBarrierSrcQueueFamilyIndex, memoryBarrierDstQueueFamilyIndex,
-	memoryBarrierBuffer, memoryBarrierOffset, memoryBarrierSize
+	memoryBarrierBuffer, memoryBarrierOffset, memoryBarrierSize,
+
+	MemoryBarrier2, pattern MemoryBarrier2,
+	memoryBarrier2SType, memoryBarrier2PNext,
+	memoryBarrier2SrcStageMask, memoryBarrier2SrcAccessMask,
+	memoryBarrier2DstStageMask, memoryBarrier2DstAccessMask,
+	memoryBarrier2SrcQueueFamilyIndex, memoryBarrier2DstQueueFamilyIndex,
+	memoryBarrier2Buffer, memoryBarrier2Offset, memoryBarrier2Size
 
 	) where
 
@@ -137,6 +144,45 @@ struct "MemoryBarrier" #{size VkBufferMemoryBarrier}
 	("size", ''#{type VkDeviceSize},
 		[| #{peek VkBufferMemoryBarrier, size} |],
 		[| #{poke VkBufferMemoryBarrier, size} |]) ]
+	[''Show, ''Storable]
+
+mbType2 :: #{type VkStructureType}
+mbType2 = #{const VK_STRUCTURE_TYPE_BUFFER_MEMORY_BARRIER_2}
+
+struct "MemoryBarrier2" #{size VkBufferMemoryBarrier2}
+	#{alignment VkBufferMemoryBarrier2} [
+	("sType", ''(), [| const $ pure() |],
+		[| \p _ -> #{poke VkBufferMemoryBarrier2, sType} p mbType2 |]),
+	("pNext", ''PtrVoid,
+		[| #{peek VkBufferMemoryBarrier2, pNext} |],
+		[| #{poke VkBufferMemoryBarrier2, pNext} |]),
+	("srcStageMask", ''#{type VkPipelineStageFlags2},
+		[| #{peek VkBufferMemoryBarrier2, srcStageMask} |],
+		[| #{poke VkBufferMemoryBarrier2, srcStageMask} |]),
+	("srcAccessMask", ''#{type VkAccessFlags2},
+		[| #{peek VkBufferMemoryBarrier2, srcAccessMask} |],
+		[| #{poke VkBufferMemoryBarrier2, srcAccessMask} |]),
+	("dstStageMask", ''#{type VkPipelineStageFlags2},
+		[| #{peek VkBufferMemoryBarrier2, dstStageMask} |],
+		[| #{poke VkBufferMemoryBarrier2, dstStageMask} |]),
+	("dstAccessMask", ''#{type VkAccessFlags2},
+		[| #{peek VkBufferMemoryBarrier2, dstAccessMask} |],
+		[| #{poke VkBufferMemoryBarrier2, dstAccessMask} |]),
+	("srcQueueFamilyIndex", ''#{type uint32_t},
+		[| #{peek VkBufferMemoryBarrier2, srcQueueFamilyIndex} |],
+		[| #{poke VkBufferMemoryBarrier2, srcQueueFamilyIndex} |]),
+	("dstQueueFamilyIndex", ''#{type uint32_t},
+		[| #{peek VkBufferMemoryBarrier2, dstQueueFamilyIndex} |],
+		[| #{poke VkBufferMemoryBarrier2, dstQueueFamilyIndex} |]),
+	("buffer", ''B,
+		[| #{peek VkBufferMemoryBarrier2, buffer} |],
+		[| #{poke VkBufferMemoryBarrier2, buffer} |]),
+	("offset", ''#{type VkDeviceSize},
+		[| #{peek VkBufferMemoryBarrier2, offset} |],
+		[| #{poke VkBufferMemoryBarrier2, offset} |]),
+	("size", ''#{type VkDeviceSize},
+		[| #{peek VkBufferMemoryBarrier2, size} |],
+		[| #{poke VkBufferMemoryBarrier2, size} |]) ]
 	[''Show, ''Storable]
 
 struct "ImageCopy" #{size VkBufferImageCopy} #{alignment VkBufferImageCopy} [
