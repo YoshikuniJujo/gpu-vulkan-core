@@ -28,6 +28,14 @@ module Gpu.Vulkan.Image.Core (
 	memoryBarrierSrcQueueFamilyIndex, memoryBarrierDstQueueFamilyIndex,
 	memoryBarrierImage, memoryBarrierSubresourceRange,
 
+	MemoryBarrier2, pattern MemoryBarrier2,
+	memoryBarrier2SType, memoryBarrier2PNext,
+	memoryBarrier2SrcStageMask, memoryBarrier2SrcAccessMask,
+	memoryBarrier2DstStageMask, memoryBarrier2DstAccessMask,
+	memoryBarrier2OldLayout, memoryBarrier2NewLayout,
+	memoryBarrier2SrcQueueFamilyIndex, memoryBarrier2DstQueueFamilyIndex,
+	memoryBarrier2Image, memoryBarrier2SubresourceRange,
+
 	-- ** SubresourceRange
 
 	SubresourceRange, pattern SubresourceRange,
@@ -187,6 +195,48 @@ struct "MemoryBarrier" #{size VkImageMemoryBarrier}
 	("subresourceRange", ''SubresourceRange,
 		[| #{peek VkImageMemoryBarrier, subresourceRange} |],
 		[| #{poke VkImageMemoryBarrier, subresourceRange} |]) ]
+	[''Show, ''Storable]
+
+mbType2 :: #{type VkStructureType}
+mbType2 = #{const VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER_2}
+
+struct "MemoryBarrier2" #{size VkImageMemoryBarrier2}
+		#{alignment VkImageMemoryBarrier2} [
+	("sType", ''(), [| const $ pure () |],
+		[| \p _ -> #{poke VkImageMemoryBarrier2, sType} p mbType2 |]),
+	("pNext", ''PtrVoid,
+		[| #{peek VkImageMemoryBarrier2, pNext} |],
+		[| #{poke VkImageMemoryBarrier2, pNext} |]),
+	("srcStageMask", ''#{type VkPipelineStageFlags2},
+		[| #{peek VkImageMemoryBarrier2, srcStageMask} |],
+		[| #{poke VkImageMemoryBarrier2, srcStageMask} |]),
+	("srcAccessMask", ''#{type VkAccessFlags2},
+		[| #{peek VkImageMemoryBarrier2, srcAccessMask} |],
+		[| #{poke VkImageMemoryBarrier2, srcAccessMask} |]),
+	("dstStageMask", ''#{type VkPipelineStageFlags2},
+		[| #{peek VkImageMemoryBarrier2, dstStageMask} |],
+		[| #{poke VkImageMemoryBarrier2, dstStageMask} |]),
+	("dstAccessMask", ''#{type VkAccessFlags2},
+		[| #{peek VkImageMemoryBarrier2, dstAccessMask} |],
+		[| #{poke VkImageMemoryBarrier2, dstAccessMask} |]),
+	("oldLayout", ''#{type VkImageLayout},
+		[| #{peek VkImageMemoryBarrier2, oldLayout} |],
+		[| #{poke VkImageMemoryBarrier2, oldLayout} |]),
+	("newLayout", ''#{type VkImageLayout},
+		[| #{peek VkImageMemoryBarrier2, newLayout} |],
+		[| #{poke VkImageMemoryBarrier2, newLayout} |]),
+	("srcQueueFamilyIndex", ''#{type uint32_t},
+		[| #{peek VkImageMemoryBarrier2, srcQueueFamilyIndex} |],
+		[| #{poke VkImageMemoryBarrier2, srcQueueFamilyIndex} |]),
+	("dstQueueFamilyIndex", ''#{type uint32_t},
+		[| #{peek VkImageMemoryBarrier2, dstQueueFamilyIndex} |],
+		[| #{poke VkImageMemoryBarrier2, dstQueueFamilyIndex} |]),
+	("image", ''I,
+		[| #{peek VkImageMemoryBarrier2, image} |],
+		[| #{poke VkImageMemoryBarrier2, image} |]),
+	("subresourceRange", ''SubresourceRange,
+		[| #{peek VkImageMemoryBarrier2, subresourceRange} |],
+		[| #{poke VkImageMemoryBarrier2, subresourceRange} |]) ]
 	[''Show, ''Storable]
 
 struct "SubresourceLayers" #{size VkImageSubresourceLayers}
