@@ -28,7 +28,7 @@ module Gpu.Vulkan.Image.Core (
 	memoryBarrierSrcQueueFamilyIndex, memoryBarrierDstQueueFamilyIndex,
 	memoryBarrierImage, memoryBarrierSubresourceRange,
 
-	MemoryBarrier2, pattern MemoryBarrier2,
+	MemoryBarrier2, PtrMemoryBarrier2, pattern MemoryBarrier2,
 	memoryBarrier2SType, memoryBarrier2PNext,
 	memoryBarrier2SrcStageMask, memoryBarrier2SrcAccessMask,
 	memoryBarrier2DstStageMask, memoryBarrier2DstAccessMask,
@@ -238,6 +238,8 @@ struct "MemoryBarrier2" #{size VkImageMemoryBarrier2}
 		[| #{peek VkImageMemoryBarrier2, subresourceRange} |],
 		[| #{poke VkImageMemoryBarrier2, subresourceRange} |]) ]
 	[''Show, ''Storable]
+
+type PtrMemoryBarrier2 = Ptr MemoryBarrier2
 
 struct "SubresourceLayers" #{size VkImageSubresourceLayers}
 		#{alignment VkImageSubresourceLayers} [

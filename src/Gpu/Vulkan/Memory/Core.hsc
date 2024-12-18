@@ -33,7 +33,7 @@ module Gpu.Vulkan.Memory.Core (
 	Barrier, pattern Barrier,
 	barrierSType, barrierPNext, barrierSrcAccessMask, barrierDstAccessMask,
 
-	Barrier2, pattern Barrier2,
+	Barrier2, PtrBarrier2, pattern Barrier2,
 	barrier2SType, barrier2PNext,
 	barrier2SrcStageMask, barrier2SrcAccessMask,
 	barrier2DstStageMask, barrier2DstAccessMask
@@ -167,3 +167,5 @@ struct "Barrier2" #{size VkMemoryBarrier2} #{alignment VkMemoryBarrier2} [
 		[| #{peek VkMemoryBarrier2, dstAccessMask} |],
 		[| #{poke VkMemoryBarrier2, dstAccessMask} |]) ]
 	[''Show, ''Storable]
+
+type PtrBarrier2 = Ptr Barrier2

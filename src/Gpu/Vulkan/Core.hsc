@@ -109,6 +109,16 @@ module Gpu.Vulkan.Core (
 	Extent3d, pattern Extent3d,
 	extent3dWidth, extent3dHeight, extent3dDepth,
 
+	-- ** DEPENDENCY INFO
+
+	DependencyInfo, pattern DependencyInfo,
+	dependencyInfoSType, dependencyInfoPNext, dependencyInfoDependencyFlags,
+	dependencyInfoMemoryBarrierCount, dependencyInfoPMemoryBarriers,
+	dependencyInfoBufferMemoryBarrierCount,
+	dependencyInfoPBufferMemoryBarriers,
+	dependencyInfoImageMemoryBarrierCount,
+	dependencyInfoPImageMemoryBarriers
+
 	) where
 
 import Foreign.Ptr
@@ -127,6 +137,10 @@ import qualified Data.Text.Foreign as Txt
 
 import {-# SOURCE #-} qualified Gpu.Vulkan.CommandBuffer.Core as CommandBuffer
 import {-# SOURCE #-} qualified Gpu.Vulkan.Semaphore.Core as Semaphore
+
+import qualified Gpu.Vulkan.Memory.Core as Memory
+import {-# SOURCE #-} qualified Gpu.Vulkan.Buffer.Core as Buffer
+import {-# SOURCE #-} qualified Gpu.Vulkan.Image.Core as Image
 
 #include <vulkan/vulkan.h>
 
@@ -386,4 +400,35 @@ struct "FormatProperties" #{size VkFormatProperties}
 	("bufferFeatures", ''#{type VkFormatFeatureFlags},
 		[| #{peek VkFormatProperties, bufferFeatures} |],
 		[| #{poke VkFormatProperties, bufferFeatures} |]) ]
+	[''Show, ''Storable]
+
+struct "DependencyInfo" #{size VkDependencyInfo} #{alignment VkDependencyInfo} [
+	("sType",  ''(), [| const $ pure () |],
+		[| \p _ -> #{poke VkApplicationInfo, sType} p
+			(#{const VK_STRUCTURE_TYPE_DEPENDENCY_INFO} ::
+				#{type VkStructureType}) |]),
+	("pNext", ''PtrVoid,
+		[| #{peek VkDependencyInfo, pNext} |],
+		[| #{poke VkDependencyInfo, pNext} |]),
+	("dependencyFlags", ''#{type VkDependencyFlags},
+		[| #{peek VkDependencyInfo, dependencyFlags} |],
+		[| #{poke VkDependencyInfo, dependencyFlags} |] ),
+	("memoryBarrierCount", ''#{type uint32_t},
+		[| #{peek VkDependencyInfo, memoryBarrierCount} |],
+		[| #{poke VkDependencyInfo, memoryBarrierCount} |] ),
+	("pMemoryBarriers", ''Memory.PtrBarrier2,
+		[| #{peek VkDependencyInfo, pMemoryBarriers} |],
+		[| #{poke VkDependencyInfo, pMemoryBarriers} |] ),
+	("bufferMemoryBarrierCount", ''#{type uint32_t},
+		[| #{peek VkDependencyInfo, bufferMemoryBarrierCount} |],
+		[| #{poke VkDependencyInfo, bufferMemoryBarrierCount} |]),
+	("pBufferMemoryBarriers", ''Buffer.PtrMemoryBarrier2,
+		[| #{peek VkDependencyInfo, pBufferMemoryBarriers} |],
+		[| #{poke VkDependencyInfo, pBufferMemoryBarriers} |]),
+	("imageMemoryBarrierCount", ''#{type uint32_t},
+		[| #{peek VkDependencyInfo, imageMemoryBarrierCount} |],
+		[| #{poke VkDependencyInfo, imageMemoryBarrierCount} |]),
+	("pImageMemoryBarriers", ''Image.PtrMemoryBarrier2,
+		[| #{peek VkDependencyInfo, pImageMemoryBarriers} |],
+		[| #{poke VkDependencyInfo, pImageMemoryBarriers} |]) ]
 	[''Show, ''Storable]

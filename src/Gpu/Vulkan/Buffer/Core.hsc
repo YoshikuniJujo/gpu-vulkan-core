@@ -32,7 +32,7 @@ module Gpu.Vulkan.Buffer.Core (
 	memoryBarrierSrcQueueFamilyIndex, memoryBarrierDstQueueFamilyIndex,
 	memoryBarrierBuffer, memoryBarrierOffset, memoryBarrierSize,
 
-	MemoryBarrier2, pattern MemoryBarrier2,
+	MemoryBarrier2, PtrMemoryBarrier2, pattern MemoryBarrier2,
 	memoryBarrier2SType, memoryBarrier2PNext,
 	memoryBarrier2SrcStageMask, memoryBarrier2SrcAccessMask,
 	memoryBarrier2DstStageMask, memoryBarrier2DstAccessMask,
@@ -184,6 +184,8 @@ struct "MemoryBarrier2" #{size VkBufferMemoryBarrier2}
 		[| #{peek VkBufferMemoryBarrier2, size} |],
 		[| #{poke VkBufferMemoryBarrier2, size} |]) ]
 	[''Show, ''Storable]
+
+type PtrMemoryBarrier2 = Ptr MemoryBarrier2
 
 struct "ImageCopy" #{size VkBufferImageCopy} #{alignment VkBufferImageCopy} [
 	("bufferOffset", ''#{type VkDeviceSize},
