@@ -22,7 +22,7 @@ module Gpu.Vulkan.Cmd.Core (
 
 	-- * PIPELINE BARRIER
 
-	pipelineBarrier,
+	pipelineBarrier, pipelineBarrier2,
 
 	-- * QUERY
 
@@ -35,6 +35,7 @@ import Foreign.Ptr
 import Data.Word
 import Data.Int
 
+import Gpu.Vulkan.Core
 import qualified Gpu.Vulkan.RenderPass.Core as RenderPass
 import qualified Gpu.Vulkan.Pipeline.Core as Pipeline
 import qualified Gpu.Vulkan.CommandBuffer.Core as CommandBuffer
@@ -126,3 +127,6 @@ foreign import ccall "vkCmdEndQuery" endQuery ::
 foreign import ccall "vkCmdWriteTimestamp" writeTimestamp ::
 	CommandBuffer.C -> #{type VkPipelineStageFlagBits} -> QueryPool.Q ->
 	#{type uint32_t} -> IO ()
+
+foreign import ccall "vkCmdPipelineBarrier2" pipelineBarrier2 ::
+	CommandBuffer.C -> Ptr DependencyInfo -> IO ()
