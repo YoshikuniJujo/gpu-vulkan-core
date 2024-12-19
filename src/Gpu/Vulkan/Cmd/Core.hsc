@@ -20,14 +20,17 @@ module Gpu.Vulkan.Cmd.Core (
 
 	copyBuffer, copyBufferToImage, copyImageToBuffer, blitImage,
 
+	-- * CLEAR COLOR IMAGE
+
+	clearColorImage,
+
 	-- * PIPELINE BARRIER
 
 	pipelineBarrier, pipelineBarrier2,
 
 	-- * QUERY
 
-	beginQuery, endQuery, resetQueryPool,
-	writeTimestamp,
+	beginQuery, endQuery, resetQueryPool, writeTimestamp,
 
 	) where
 
@@ -130,3 +133,8 @@ foreign import ccall "vkCmdWriteTimestamp" writeTimestamp ::
 
 foreign import ccall "vkCmdPipelineBarrier2" pipelineBarrier2 ::
 	CommandBuffer.C -> Ptr DependencyInfo -> IO ()
+
+foreign import ccall "vkCmdClearColorImage" clearColorImage ::
+	CommandBuffer.C -> Image.I -> #{type VkImageLayout} ->
+	Ptr ClearColorValue -> #{type uint32_t} -> Ptr Image.SubresourceRange ->
+	IO ()
