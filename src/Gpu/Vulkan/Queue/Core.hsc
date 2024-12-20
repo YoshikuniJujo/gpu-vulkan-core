@@ -8,7 +8,7 @@ module Gpu.Vulkan.Queue.Core (
 
 	-- * SUBMIT AND WAIT IDLE
 
-	Q, submit, waitIdle,
+	Q, submit, submit2, waitIdle,
 
 	-- * BIND SPARSE
 
@@ -90,4 +90,8 @@ struct "BindSparseInfo" #{size VkBindSparseInfo} #{alignment VkBindSparseInfo} [
 
 foreign import ccall "vkQueueBindSparse" bindSparse ::
 	Q -> #{type uint32_t} -> Ptr BindSparseInfo -> Fence.F ->
+	IO #{type VkResult}
+
+foreign import ccall "vkQueueSubmit2" submit2 ::
+	Q -> #{type uint32_t} -> Ptr SubmitInfo2 -> Fence.F ->
 	IO #{type VkResult}
