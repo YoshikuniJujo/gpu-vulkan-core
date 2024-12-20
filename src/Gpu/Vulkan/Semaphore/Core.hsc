@@ -10,6 +10,13 @@ module Gpu.Vulkan.Semaphore.Core (
 	create, destroy, S, PtrS, CreateInfo, pattern CreateInfo,
 	createInfoSType, createInfoPNext, createInfoFlags,
 
+	-- * SUBMIT INFO
+
+	SubmitInfo, pattern SubmitInfo,
+	submitInfoSType, submitInfoPNext,
+	submitInfoSemaphore, submitInfoValue,
+	submitInfoStageMask, submitInfoDeviceIndex
+
 	) where
 
 import Foreign.Ptr
@@ -49,3 +56,27 @@ foreign import ccall "vkCreateSemaphore" create ::
 
 foreign import ccall "vkDestroySemaphore" destroy ::
 	Device.D -> S -> Ptr AllocationCallbacks.A -> IO ()
+
+ssType :: #{type VkStructureType}
+ssType = #{const VK_STRUCTURE_TYPE_SEMAPHORE_SUBMIT_INFO}
+
+struct "SubmitInfo" #{size VkSemaphoreSubmitInfo}
+	#{alignment VkSemaphoreSubmitInfo} [
+	("sType", ''(), [| const $ pure () |],
+		[| \p _ -> #{poke VkSemaphoreSubmitInfo, sType} p ssType |]),
+	("pNext", ''PtrVoid,
+		[| #{peek VkSemaphoreSubmitInfo, pNext} |],
+		[| #{poke VkSemaphoreSubmitInfo, pNext} |]),
+	("semaphore", ''S,
+		[| #{peek VkSemaphoreSubmitInfo, semaphore} |],
+		[| #{poke VkSemaphoreSubmitInfo, semaphore} |]),
+	("value", ''#{type uint64_t},
+		[| #{peek VkSemaphoreSubmitInfo, value} |],
+		[| #{poke VkSemaphoreSubmitInfo, value} |]),
+	("stageMask", ''#{type VkPipelineStageFlags2},
+		[| #{peek VkSemaphoreSubmitInfo, stageMask} |],
+		[| #{poke VkSemaphoreSubmitInfo, stageMask} |]),
+	("deviceIndex", ''#{type uint32_t},
+		[| #{peek VkSemaphoreSubmitInfo, deviceIndex} |],
+		[| #{poke VkSemaphoreSubmitInfo, deviceIndex} |]) ]
+	[''Show, ''Storable]
