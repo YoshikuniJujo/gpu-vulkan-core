@@ -27,7 +27,7 @@ module Gpu.Vulkan.CommandBuffer.Core (
 
 	-- * SUBMIT INFO
 
-	SubmitInfo, pattern SubmitInfo,
+	SubmitInfo, PtrSubmitInfo, pattern SubmitInfo,
 	submitInfoSType, submitInfoPNext,
 	submitInfoCommandBuffer, submitInfoDeviceMask
 
@@ -161,3 +161,5 @@ struct "SubmitInfo" #{size VkCommandBufferSubmitInfo}
 		[| #{poke VkCommandBufferSubmitInfo, deviceMask} |])
 	]
 	[''Show, ''Storable]
+
+type PtrSubmitInfo = Ptr SubmitInfo

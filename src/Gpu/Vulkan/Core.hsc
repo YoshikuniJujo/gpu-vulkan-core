@@ -31,6 +31,12 @@ module Gpu.Vulkan.Core (
 	submitInfoCommandBufferCount, submitInfoPCommandBuffers,
 	submitInfoSignalSemaphoreCount, submitInfoPSignalSemaphores,
 
+	SubmitInfo2, pattern SubmitInfo2,
+	submitInfo2SType, submitInfo2PNext, submitInfo2Flags,
+	submitInfo2WaitSemaphoreInfoCount, submitInfo2PWaitSemaphoreInfos,
+	submitInfo2CommandBufferInfoCount, submitInfo2PCommandBufferInfos,
+	submitInfo2SignalSemaphoreInfoCount, submitInfo2PSignalSemaphoreInfos,
+
 	-- * PROPERTIES
 
 	-- ** ExtensionProperties
@@ -290,6 +296,38 @@ struct "SubmitInfo" #{size VkSubmitInfo} #{alignment VkSubmitInfo} [
 	("pSignalSemaphores", ''Semaphore.PtrS,
 		[| #{peek VkSubmitInfo, pSignalSemaphores} |],
 		[| #{poke VkSubmitInfo, pSignalSemaphores} |]) ]
+	[''Show, ''Storable]
+
+sTypeS2 :: #{type VkStructureType}
+sTypeS2 = #{const VK_STRUCTURE_TYPE_SUBMIT_INFO_2}
+
+struct "SubmitInfo2" #{size VkSubmitInfo2} #{alignment VkSubmitInfo2} [
+	("sType", ''(), [| const $ pure () |],
+		[| \p _ -> #{poke VkSubmitInfo2, sType} p sTypeS2 |]),
+	("pNext", ''PtrVoid,
+		[| #{peek VkSubmitInfo2, pNext} |],
+		[| #{poke VkSubmitInfo2, pNext} |]),
+	("flags", ''#{type VkSubmitFlags},
+		[| #{peek VkSubmitInfo2, flags} |],
+		[| #{poke VkSubmitInfo2, flags} |]),
+	("waitSemaphoreInfoCount", ''#{type uint32_t},
+		[| #{peek VkSubmitInfo2, waitSemaphoreInfoCount} |],
+		[| #{poke VkSubmitInfo2, waitSemaphoreInfoCount} |]),
+	("pWaitSemaphoreInfos", ''Semaphore.PtrSubmitInfo,
+		[| #{peek VkSubmitInfo2, pWaitSemaphoreInfos} |],
+		[| #{poke VkSubmitInfo2, pWaitSemaphoreInfos} |]),
+	("commandBufferInfoCount", ''#{type uint32_t},
+		[| #{peek VkSubmitInfo2, commandBufferInfoCount} |],
+		[| #{poke VkSubmitInfo2, commandBufferInfoCount} |]),
+	("pCommandBufferInfos", ''CommandBuffer.PtrSubmitInfo,
+		[| #{peek VkSubmitInfo2, pCommandBufferInfos} |],
+		[| #{poke VkSubmitInfo2, pCommandBufferInfos} |]),
+	("signalSemaphoreInfoCount", ''#{type uint32_t},
+		[| #{peek VkSubmitInfo2, signalSemaphoreInfoCount} |],
+		[| #{poke VkSubmitInfo2, signalSemaphoreInfoCount} |]),
+	("pSignalSemaphoreInfos", ''Semaphore.PtrSubmitInfo,
+		[| #{peek VkSubmitInfo2, pSignalSemaphoreInfos} |],
+		[| #{poke VkSubmitInfo2, pSignalSemaphoreInfos} |]) ]
 	[''Show, ''Storable]
 
 struct "ExtensionProperties" #{size VkExtensionProperties}

@@ -12,7 +12,7 @@ module Gpu.Vulkan.Semaphore.Core (
 
 	-- * SUBMIT INFO
 
-	SubmitInfo, pattern SubmitInfo,
+	SubmitInfo, PtrSubmitInfo, pattern SubmitInfo,
 	submitInfoSType, submitInfoPNext,
 	submitInfoSemaphore, submitInfoValue,
 	submitInfoStageMask, submitInfoDeviceIndex
@@ -80,3 +80,5 @@ struct "SubmitInfo" #{size VkSemaphoreSubmitInfo}
 		[| #{peek VkSemaphoreSubmitInfo, deviceIndex} |],
 		[| #{poke VkSemaphoreSubmitInfo, deviceIndex} |]) ]
 	[''Show, ''Storable]
+
+type PtrSubmitInfo = Ptr SubmitInfo
