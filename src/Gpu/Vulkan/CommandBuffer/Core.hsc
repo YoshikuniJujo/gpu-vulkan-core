@@ -23,7 +23,13 @@ module Gpu.Vulkan.CommandBuffer.Core (
 	inheritanceInfoSType, inheritanceInfoPNext,
 	inheritanceInfoRenderPass, inheritanceInfoSubpass,
 	inheritanceInfoFramebuffer, inheritanceInfoOcclusionQueryEnable,
-	inheritanceInfoQueryFlags, inheritanceInfoPipelineStatistics
+	inheritanceInfoQueryFlags, inheritanceInfoPipelineStatistics,
+
+	-- * SUBMIT INFO
+
+	SubmitInfo, pattern SubmitInfo,
+	submitInfoSType, submitInfoPNext,
+	submitInfoCommandBuffer, submitInfoDeviceMask
 
 	) where
 
@@ -135,3 +141,23 @@ foreign import ccall "vkResetCommandBuffer" reset ::
 
 foreign import ccall "vkFreeCommandBuffers" freeCs ::
 	Device.D -> CommandPool.C -> #{type uint32_t} -> Ptr C -> IO ()
+
+sTypeS :: #{type VkStructureType}
+sTypeS = #{const VK_STRUCTURE_TYPE_COMMAND_BUFFER_SUBMIT_INFO}
+
+struct "SubmitInfo" #{size VkCommandBufferSubmitInfo}
+		#{alignment VkCommandBufferSubmitInfo} [
+	("sType", ''(), [| const $ pure () |],
+		[| \p _ -> #{poke VkCommandBufferSubmitInfo, sType}
+			p sTypeS |]),
+	("pNext", ''PtrVoid,
+		[| #{peek VkCommandBufferSubmitInfo, pNext} |],
+		[| #{poke VkCommandBufferSubmitInfo, pNext} |]),
+	("commandBuffer", ''C,
+		[| #{peek VkCommandBufferSubmitInfo, commandBuffer} |],
+		[| #{poke VkCommandBufferSubmitInfo, commandBuffer} |]),
+	("deviceMask", ''#{type uint32_t},
+		[| #{peek VkCommandBufferSubmitInfo, deviceMask} |],
+		[| #{poke VkCommandBufferSubmitInfo, deviceMask} |])
+	]
+	[''Show, ''Storable]
