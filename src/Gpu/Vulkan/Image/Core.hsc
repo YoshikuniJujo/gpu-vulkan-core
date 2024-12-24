@@ -48,6 +48,11 @@ module Gpu.Vulkan.Image.Core (
 	Blit, pattern Blit,
 	blitSrcSubresource, blitSrcOffsets, blitDstSubresource, blitDstOffsets,
 
+	Blit2, PtrBlit2, pattern Blit2,
+	blit2SType, blit2PNext,
+	blit2SrcSubresource, blit2SrcOffsets,
+	blit2DstSubresource, blit2DstOffsets,
+
 	-- ** SubresourceLayers
 
 	SubresourceLayers, pattern SubresourceLayers,
@@ -276,6 +281,32 @@ struct "Blit" #{size VkImageBlit} #{alignment VkImageBlit} [
 		[| \p os -> pokeArray
 			(#{ptr VkImageBlit, dstOffsets} p) $ take 2 os |]) ]
 	[''Show, ''Storable]
+
+struct "Blit2" #{size VkImageBlit2} #{alignment VkImageBlit2} [
+	("sType", ''(), [| const $ pure () |],
+		[| \p _ -> #{poke VkImageBlit2, sType} p
+			(#{const VK_STRUCTURE_TYPE_IMAGE_BLIT_2} ::
+				#{type VkStructureType}) |]),
+	("pNext", ''PtrVoid,
+		[| #{peek VkImageBlit2, pNext} |],
+		[| #{poke VkImageBlit2, pNext} |]),
+	("srcSubresource", ''SubresourceLayers,
+		[| #{peek VkImageBlit2, srcSubresource} |],
+		[| #{poke VkImageBlit2, srcSubresource} |]),
+	("srcOffsets", ''ListOffset3d,
+		[| \p -> peekArray 2  (#{ptr VkImageBlit2, srcOffsets} p) |],
+		[| \p os -> pokeArray
+			(#{ptr VkImageBlit2, srcOffsets} p) $ take 2 os |]),
+	("dstSubresource", ''SubresourceLayers,
+		[| #{peek VkImageBlit2, dstSubresource} |],
+		[| #{poke VkImageBlit2, dstSubresource} |]),
+	("dstOffsets", ''ListOffset3d,
+		[| \p -> peekArray 2 (#{ptr VkImageBlit2, dstOffsets} p) |],
+		[| \p os -> pokeArray
+			(#{ptr VkImageBlit2, dstOffsets} p) $ take 2 os |]) ]
+	[''Show, ''Storable]
+
+type PtrBlit2 = Ptr Blit2
 
 struct "Subresource" #{size VkImageSubresource}
 	#{alignment VkImageSubresource} [

@@ -123,7 +123,15 @@ module Gpu.Vulkan.Core (
 	dependencyInfoBufferMemoryBarrierCount,
 	dependencyInfoPBufferMemoryBarriers,
 	dependencyInfoImageMemoryBarrierCount,
-	dependencyInfoPImageMemoryBarriers
+	dependencyInfoPImageMemoryBarriers,
+
+	-- * BLIT IMAGE INFO 2
+
+	BlitImageInfo2, pattern BlitImageInfo2,
+	blitImageInfo2SType, blitImageInfo2PNext,
+	blitImageInfo2SrcImage, blitImageInfo2SrcImageLayout,
+	blitImageInfo2DstImage, blitImageInfo2DstImageLayout,
+	blitImageInfo2RegionCount, blitImageInfo2PRegions, blitImageInfo2Filter
 
 	) where
 
@@ -469,4 +477,35 @@ struct "DependencyInfo" #{size VkDependencyInfo} #{alignment VkDependencyInfo} [
 	("pImageMemoryBarriers", ''Image.PtrMemoryBarrier2,
 		[| #{peek VkDependencyInfo, pImageMemoryBarriers} |],
 		[| #{poke VkDependencyInfo, pImageMemoryBarriers} |]) ]
+	[''Show, ''Storable]
+
+struct "BlitImageInfo2" #{size VkBlitImageInfo2} #{alignment VkBlitImageInfo2} [
+	("sType", ''(), [| const $ pure () |],
+		[| \p _ -> #{poke VkBlitImageInfo2, sType} p
+			(#{const VK_STRUCTURE_TYPE_BLIT_IMAGE_INFO_2} ::
+				#{type VkStructureType}) |]),
+	("pNext", ''PtrVoid,
+		[| #{peek VkBlitImageInfo2, pNext} |],
+		[| #{poke VkBlitImageInfo2, pNext} |]),
+	("srcImage", ''Image.I,
+		[| #{peek VkBlitImageInfo2, srcImage} |],
+		[| #{poke VkBlitImageInfo2, srcImage} |]),
+	("srcImageLayout", ''#{type VkImageLayout},
+		[| #{peek VkBlitImageInfo2, srcImageLayout} |],
+		[| #{poke VkBlitImageInfo2, srcImageLayout} |]),
+	("dstImage", ''Image.I,
+		[| #{peek VkBlitImageInfo2, dstImage} |],
+		[| #{poke VkBlitImageInfo2, dstImage} |]),
+	("dstImageLayout", ''#{type VkImageLayout},
+		[| #{peek VkBlitImageInfo2, dstImageLayout} |],
+		[| #{poke VkBlitImageInfo2, dstImageLayout} |]),
+	("regionCount", ''#{type uint32_t},
+		[| #{peek VkBlitImageInfo2, regionCount} |],
+		[| #{poke VkBlitImageInfo2, regionCount} |]),
+	("pRegions", ''Image.PtrBlit2,
+		[| #{peek VkBlitImageInfo2, pRegions} |],
+		[| #{poke VkBlitImageInfo2, pRegions} |]),
+	("filter", ''#{type VkFilter},
+		[| #{peek VkBlitImageInfo2, filter} |],
+		[| #{poke VkBlitImageInfo2, filter} |]) ]
 	[''Show, ''Storable]
