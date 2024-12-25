@@ -18,7 +18,7 @@ module Gpu.Vulkan.Cmd.Core (
 
 	-- * COPY BUFFER AND IMAGE
 
-	copyBuffer, copyBufferToImage, copyImageToBuffer, blitImage,
+	copyBuffer, copyBufferToImage, copyImageToBuffer, blitImage, blitImage2,
 
 	-- * CLEAR COLOR IMAGE
 
@@ -107,6 +107,9 @@ foreign import ccall "vkCmdBlitImage" blitImage ::
 	CommandBuffer.C ->
 	Image.I -> #{type VkImageLayout} -> Image.I -> #{type VkImageLayout} ->
 	#{type uint32_t} -> Ptr Image.Blit -> #{type VkFilter} -> IO ()
+
+foreign import ccall "vkCmdBlitImage2" blitImage2 ::
+	CommandBuffer.C -> Ptr BlitImageInfo2 -> IO()
 
 foreign import ccall "vkCmdDispatch" dispatch ::
 	CommandBuffer.C ->
