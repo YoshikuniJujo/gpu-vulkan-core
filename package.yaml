@@ -1,5 +1,5 @@
 name:                gpu-vulkan-core
-version:             0.1.0.20
+version:             0.1.0.21
 github:              "YoshikuniJujo/gpu-vulkan-core"
 license:             BSD3
 author:              "Yoshikuni Jujo"
@@ -46,6 +46,7 @@ library:
   - Gpu.Vulkan.DescriptorSetLayout.Core
   - Gpu.Vulkan.DescriptorSetLayout.BindingFlags.Core
   - Gpu.Vulkan.Device.Core
+  - Gpu.Vulkan.Device.GroupDevice.Core
   - Gpu.Vulkan.Fence.Core
   - Gpu.Vulkan.Framebuffer.Core
   - Gpu.Vulkan.Image.Core

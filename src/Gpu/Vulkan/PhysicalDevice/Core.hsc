@@ -7,7 +7,7 @@ module Gpu.Vulkan.PhysicalDevice.Core (
 
 	-- * ENUMERATE
 
-	enumerate, P,
+	enumerate, P, PtrP,
 
 	-- * PROPERTIES
 
@@ -95,6 +95,7 @@ import qualified Gpu.Vulkan.Memory.Core as Memory
 
 data PTag
 type P = Ptr PTag
+type PtrP = Ptr P
 
 foreign import ccall "vkEnumeratePhysicalDevices" enumerate ::
 	Instance.I -> Ptr #{type uint32_t} -> Ptr P ->

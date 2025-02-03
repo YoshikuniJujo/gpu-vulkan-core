@@ -5,7 +5,7 @@ cabal-version: 1.12
 -- see: https://github.com/sol/hpack
 
 name:           gpu-vulkan-core
-version:        0.1.0.20
+version:        0.1.0.21
 synopsis:       Thin wrapper for Vulkan API
 description:    Please see the README on GitHub at <https://github.com/YoshikuniJujo/gpu-vulkan-core#readme>
 category:       GPU
@@ -42,6 +42,7 @@ library
       Gpu.Vulkan.DescriptorSetLayout.Core
       Gpu.Vulkan.DescriptorSetLayout.BindingFlags.Core
       Gpu.Vulkan.Device.Core
+      Gpu.Vulkan.Device.GroupDevice.Core
       Gpu.Vulkan.Fence.Core
       Gpu.Vulkan.Framebuffer.Core
       Gpu.Vulkan.Image.Core
