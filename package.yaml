@@ -25,6 +25,7 @@ dependencies:
 - c-enum < 1
 - c-struct < 1
 - nowdoc < 1
+- tools-yj < 1
 
 library:
   source-dirs: src
@@ -75,6 +76,7 @@ library:
   - Gpu.Vulkan.QueryPool.Core
   - Gpu.Vulkan.Queue.Core
   - Gpu.Vulkan.QueueFamily.Core
+  - Gpu.Vulkan.Rendering.Core
   - Gpu.Vulkan.RenderPass.Core
   - Gpu.Vulkan.Sampler.Core
   - Gpu.Vulkan.Semaphore.Core
