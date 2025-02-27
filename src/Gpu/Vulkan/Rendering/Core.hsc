@@ -1,3 +1,4 @@
+{-# LANGUAGE ImportQualifiedPost #-}
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE BlockArguments, LambdaCase, TupleSections #-}
 {-# LANGUAGE GADTs #-}
@@ -18,7 +19,8 @@ import Data.Int
 
 import Unsafe.Coerce
 
-import Gpu.Vulkan.ImageView.Core as ImageView
+import Gpu.Vulkan.Core qualified as Vk
+import Gpu.Vulkan.ImageView.Core qualified as ImageView
 
 #include <vulkan/vulkan.h>
 
@@ -109,15 +111,10 @@ data ClearColorValue n where
 
 deriving instance Show (ClearColorValue n)
 
-data ClearDepthStencilValue = ClearDepthStencilValue {
-	clearDepthStencilValueDepth :: Float,
-	clearDepthStencilValueStencil :: Word32 }
-	deriving Show
-
-clearValueToClearDepthStencilValue :: ClearValue -> ClearDepthStencilValue
+clearValueToClearDepthStencilValue :: ClearValue -> Vk.ClearDepthStencilValue
 clearValueToClearDepthStencilValue (ClearValue d s _ _) =
-	ClearDepthStencilValue (unsafeCoerce d) s
+	Vk.ClearDepthStencilValue (unsafeCoerce d) s
 
-clearDepthStencilValueToClearValue :: ClearDepthStencilValue -> ClearValue
-clearDepthStencilValueToClearValue (ClearDepthStencilValue d s) =
+clearDepthStencilValueToClearValue :: Vk.ClearDepthStencilValue -> ClearValue
+clearDepthStencilValueToClearValue (Vk.ClearDepthStencilValue d s) =
 	ClearValue (unsafeCoerce d) s 0 0
