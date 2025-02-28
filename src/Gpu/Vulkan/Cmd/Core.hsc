@@ -64,7 +64,7 @@ foreign import ccall "vkCmdBeginRenderPass" beginRenderPass ::
 foreign import ccall "vkCmdBindPipeline" bindPipeline ::
 	CommandBuffer.C -> #{type VkPipelineBindPoint} -> Pipeline.P -> IO ()
 
-foreign import ccall "vkCmdBeginRendring" beginRendering ::
+foreign import ccall "vkCmdBeginRendering" beginRendering ::
 	CommandBuffer.C -> Ptr Rendering.Info -> IO ()
 
 foreign import ccall "vkCmdEndRendering" endRendering ::
