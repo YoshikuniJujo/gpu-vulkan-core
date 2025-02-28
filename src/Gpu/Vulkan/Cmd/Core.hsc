@@ -6,6 +6,10 @@ module Gpu.Vulkan.Cmd.Core (
 
 	beginRenderPass, endRenderPass,
 
+	-- * BEGIN AND END RENDERING
+
+	beginRendering, endRendering,
+
 	-- * DRAW AND DISPATCH
 
 	draw, drawIndexed, dispatch,
@@ -40,6 +44,7 @@ import Data.Int
 
 import Gpu.Vulkan.Core
 import qualified Gpu.Vulkan.RenderPass.Core as RenderPass
+import qualified Gpu.Vulkan.Rendering.Core as Rendering
 import qualified Gpu.Vulkan.Pipeline.Core as Pipeline
 import qualified Gpu.Vulkan.CommandBuffer.Core as CommandBuffer
 import qualified Gpu.Vulkan.Buffer.Core as Buffer
@@ -58,6 +63,12 @@ foreign import ccall "vkCmdBeginRenderPass" beginRenderPass ::
 
 foreign import ccall "vkCmdBindPipeline" bindPipeline ::
 	CommandBuffer.C -> #{type VkPipelineBindPoint} -> Pipeline.P -> IO ()
+
+foreign import ccall "vkCmdBeginRendring" beginRendering ::
+	CommandBuffer.C -> Ptr Rendering.Info -> IO ()
+
+foreign import ccall "vkCmdEndRendering" endRendering ::
+	CommandBuffer.C -> IO ()
 
 foreign import ccall "vkCmdDraw" draw ::
 	CommandBuffer.C -> #{type uint32_t} -> #{type uint32_t} ->
