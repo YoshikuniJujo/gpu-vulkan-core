@@ -63,6 +63,8 @@ struct "AttachmentInfo" #{size VkRenderingAttachmentInfo}
 		[| #{poke VkRenderingAttachmentInfo, clearValue} |]) ]
 	[''Show, ''Storable]
 
+type PtrAttachmentInfo = Ptr AttachmentInfo
+
 sTypeA :: #{type VkStructureType}
 sTypeA = #{const VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO}
 
@@ -79,6 +81,41 @@ instance Storable ClearValue where
 
 unc4 :: (a -> b -> c -> d -> r) -> (a, b, c, d) -> r
 unc4 f (x, y, z, w) = f x y z w
+
+struct "Info" #{size VkRenderingInfo} #{alignment VkRenderingInfo} [
+	("sType", ''(), [| const $ pure () |],
+		[| \p _ -> #{poke VkRenderingInfo, sType} p sTypeI |]),
+	("pNext", ''PtrVoid,
+		[| #{peek VkRenderingInfo, pNext} |],
+		[| #{poke VkRenderingInfo, pNext} |]),
+	("flags", ''#{type VkRenderingFlags},
+		[| #{peek VkRenderingInfo, flags} |],
+		[| #{poke VkRenderingInfo, flags} |]),
+	("renderArea", ''Vk.Rect2d,
+		[| #{peek VkRenderingInfo, renderArea} |],
+		[| #{poke VkRenderingInfo, renderArea} |]),
+	("layerCount", ''#{type uint32_t},
+		[| #{peek VkRenderingInfo, layerCount} |],
+		[| #{poke VkRenderingInfo, layerCount} |]),
+	("viewMask", ''#{type uint32_t},
+		[| #{peek VkRenderingInfo, viewMask} |],
+		[| #{poke VkRenderingInfo, viewMask} |]),
+	("colorAttachmentCount", ''#{type uint32_t},
+		[| #{peek VkRenderingInfo, colorAttachmentCount} |],
+		[| #{poke VkRenderingInfo, colorAttachmentCount} |]),
+	("pColorAttachments", ''PtrAttachmentInfo,
+		[| #{peek VkRenderingInfo, pColorAttachments} |],
+		[| #{poke VkRenderingInfo, pColorAttachments} |]),
+	("pDepthAttachment", ''PtrAttachmentInfo,
+		[| #{peek VkRenderingInfo, pDepthAttachment} |],
+		[| #{poke VkRenderingInfo, pDepthAttachment} |]),
+	("pStencilAttachment", ''PtrAttachmentInfo,
+		[| #{peek VkRenderingInfo, pStencilAttachment} |],
+		[| #{poke VkRenderingInfo, pStencilAttachment} |]) ]
+	[''Show, ''Storable]
+
+sTypeI :: #{type VkStructureType}
+sTypeI = #{const VK_STRUCTURE_TYPE_RENDERING_INFO}
 
 class ClearValueToClearColorValue n where
 	clearValueToClearColorValue :: ClearValue -> ClearColorValue n
