@@ -9,6 +9,8 @@
 module Gpu.Vulkan.Rendering.Core where
 
 import Foreign.Ptr
+import Foreign.Concurrent
+import Foreign.Marshal.Alloc
 import Foreign.Marshal.Array
 import Foreign.Storable
 import Foreign.C.Struct
@@ -63,6 +65,11 @@ struct "AttachmentInfo" #{size VkRenderingAttachmentInfo}
 
 sTypeA :: #{type VkStructureType}
 sTypeA = #{const VK_STRUCTURE_TYPE_RENDERING_ATTACHMENT_INFO}
+
+getClearedAttachmentInfo :: IO AttachmentInfo
+getClearedAttachmentInfo = do
+	pa <- calloc
+	AttachmentInfo_ <$> newForeignPtr pa (free pa)
 
 instance Storable ClearValue where
 	sizeOf _ = 4 * sizeOf (undefined :: Word32)
